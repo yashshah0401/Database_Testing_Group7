@@ -3,7 +3,7 @@ import { AppDataSource } from "../database/data-source";
 import app from "../app";
 import { Vehicle } from "../entities/Vehicle";
 
-describe("🚚 /vehicles API Integration Tests", () => {
+describe("/vehicles API Integration Tests", () => {
   let createdVehicleId: number;
 
   beforeAll(async () => {
@@ -14,7 +14,7 @@ describe("🚚 /vehicles API Integration Tests", () => {
     await AppDataSource.destroy();
   });
 
-  test("POST /vehicles ➕ creates a new vehicle", async () => {
+  test("POST /vehicles creates a new vehicle", async () => {
     const res = await request(app).post("/vehicles").send({
       type: "Cargo Plane",
       model: "Boeing 747",
@@ -31,19 +31,19 @@ describe("🚚 /vehicles API Integration Tests", () => {
     expect(check.body).toHaveProperty("id", createdVehicleId);
   });
 
-  test("GET /vehicles 📦 returns list of vehicles", async () => {
+  test("GET /vehicles returns list of vehicles", async () => {
     const res = await request(app).get("/vehicles");
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-  test("GET /vehicles/:id 🔍 returns single vehicle", async () => {
+  test("GET /vehicles/:id returns single vehicle", async () => {
     const response = await request(app).get(`/vehicles/${createdVehicleId}`);
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("id", createdVehicleId);
   });
 
-  test("PUT /vehicles/:id ✏️ updates the vehicle", async () => {
+  test("PUT /vehicles/:id updates the vehicle", async () => {
     const res = await request(app)
       .put(`/vehicles/${createdVehicleId}`)
       .send({ model: "Updated Boeing" });
@@ -52,12 +52,12 @@ describe("🚚 /vehicles API Integration Tests", () => {
     expect(res.body).toHaveProperty("model", "Updated Boeing");
   });
 
-  test("DELETE /vehicles/:id 🗑️ deletes the vehicle", async () => {
+  test("DELETE /vehicles/:id deletes the vehicle", async () => {
     const res = await request(app).delete(`/vehicles/${createdVehicleId}`);
     expect(res.status).toBe(204);
   });
 
-  test("GET /vehicles/:id ❌ 404 for deleted vehicle", async () => {
+  test("GET /vehicles/:id 404 for deleted vehicle", async () => {
     const res = await request(app).get(`/vehicles/${createdVehicleId}`);
     expect(res.status).toBe(404);
   });
