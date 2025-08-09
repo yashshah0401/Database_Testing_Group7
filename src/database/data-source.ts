@@ -1,8 +1,10 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { Vehicle } from "../entities/Vehicle";
-import { Employee } from "../entities/Employee"; 
 import dotenv from "dotenv";
+
+import { Vehicle } from "../entities/Vehicle";
+import { Employee } from "../entities/Employee";
+import { Repair } from "../entities/Repair";
 
 dotenv.config();
 
@@ -19,8 +21,8 @@ export const AppDataSource = new DataSource({
   username: DB_USERNAME,
   password: DB_PASSWORD,
   database: DB_NAME,
-  synchronize: false,
+  synchronize: false,        // keep false for prod/migrations
   logging: true,
-  entities: [Vehicle, Employee], 
+  entities: [Vehicle, Employee, Repair],
   migrations: ["src/migrations/*.ts"],
 });
