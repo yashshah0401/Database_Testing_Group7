@@ -10,4 +10,6 @@ module.exports = {
   moduleFileExtensions: ["ts", "js", "json"],
   clearMocks: true,
   verbose: true,
+  forceExit: true, 
+  detectOpenHandles: true, 
 };

@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:unit": "jest src/tests/vehicle.unit.test.ts",
-    "test:integration": "jest src/tests/vehicle.integration.test.ts"
-  },
+"scripts": {
+  "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+  "test": "jest --detectOpenHandles",
+  "test:watch": "jest --watch",
+  "test:unit": "jest src/tests/vehicle.unit.test.ts",
+  "test:integration": "jest src/tests/vehicle.integration.test.ts",
+  "typeorm:migrate": "typeorm-ts-node-commonjs migration:run"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

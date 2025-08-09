@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { Vehicle } from "../entities/Vehicle";
+import { Employee } from "../entities/Employee"; 
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -18,8 +19,8 @@ export const AppDataSource = new DataSource({
   username: DB_USERNAME,
   password: DB_PASSWORD,
   database: DB_NAME,
-  synchronize: false, // ✅ Turned off
+  synchronize: false,
   logging: true,
-  entities: [Vehicle],
-  migrations: ["src/migrations/*.ts"], // ✅ Added migrations path
+  entities: [Vehicle, Employee], 
+  migrations: ["src/migrations/*.ts"],
 });
