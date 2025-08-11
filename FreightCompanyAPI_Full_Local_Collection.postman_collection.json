@@ -1,0 +1,1141 @@
+{
+  "info": {
+    "_postman_id": "404c794e-0d5e-4f7f-842c-13621c277334",
+    "name": "Freight Company API (Local URLs)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Comprehensive Postman collection for the Freight Company API.\n\nBase URL is inlined as http://localhost:4000 so no environment is required.\n\nNotes:\n- Vehicle IDs seeded (likely 1..3). Example bodies use realistic values.\n- One employee seed (id\u22482) is a mechanic; example Repair bodies use mechanicId: 2.\n- Shipments require a valid customerId if FK exists. Update `customerId` to a real value in your DB if needed.\n- Trips can link/unlink shipments using /trips/:id/shipments.\nAdjust IDs to match your database after running migrations/seeds."
+  },
+  "item": [
+    {
+      "name": "Vehicles",
+      "description": "CRUD for vehicles. Entity fields: type, model, licensePlate, capacity.",
+      "item": [
+        {
+          "name": "List vehicles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/vehicles",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "vehicles"
+              ]
+            },
+            "description": "Returns all vehicles. Useful to discover IDs for later calls."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Get vehicle by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/vehicles/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "vehicles",
+                "1"
+              ]
+            },
+            "description": "Returns a single vehicle. Change the id as needed."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Create vehicle",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/vehicles",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "vehicles"
+              ]
+            },
+            "description": "Create a vehicle. All fields are required.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"Cargo Plane\",\n  \"model\": \"Boeing 747-8F\",\n  \"licensePlate\": \"CP-100\",\n  \"capacity\": 137000\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Update vehicle (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/vehicles/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "vehicles",
+                "1"
+              ]
+            },
+            "description": "Full update of a vehicle by id (replaces all fields).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"Long Haul Truck\",\n  \"model\": \"Volvo FH16\",\n  \"licensePlate\": \"TRK-9021\",\n  \"capacity\": 44000\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Delete vehicle",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/vehicles/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "vehicles",
+                "1"
+              ]
+            },
+            "description": "Delete a vehicle by id."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Employees",
+      "description": "CRUD for employees. Fields: name, surname, seniority (int), isMechanic (boolean).",
+      "item": [
+        {
+          "name": "List employees",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/employees",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "employees"
+              ]
+            },
+            "description": "Returns all employees."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Get employee by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/employees/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "employees",
+                "1"
+              ]
+            },
+            "description": "Returns an employee by id."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Create employee",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/employees",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "employees"
+              ]
+            },
+            "description": "Create a new employee. Use isMechanic=true for mechanics.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ava\",\n  \"surname\": \"Singh\",\n  \"seniority\": 5,\n  \"isMechanic\": true\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Update employee (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/employees/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "employees",
+                "1"
+              ]
+            },
+            "description": "Full update of an employee.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ava\",\n  \"surname\": \"Singh\",\n  \"seniority\": 6,\n  \"isMechanic\": false\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Delete employee",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/employees/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "employees",
+                "1"
+              ]
+            },
+            "description": "Delete an employee by id."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Repairs",
+      "description": "Repairs for vehicles. Fields: estimatedRepairTime (int hours), actualRepairTime (int or null), vehicleId (FK), mechanicId (FK to employees where isMechanic=true).",
+      "item": [
+        {
+          "name": "List repairs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/repairs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "repairs"
+              ]
+            },
+            "description": "List all repairs."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Get repair by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/repairs/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "repairs",
+                "1"
+              ]
+            },
+            "description": "Get a repair by id."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Create repair",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/repairs",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "repairs"
+              ]
+            },
+            "description": "Create a repair. Ensure vehicleId exists and mechanicId refers to a mechanic employee.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estimatedRepairTime\": 8,\n  \"actualRepairTime\": 6,\n  \"vehicleId\": 1,\n  \"mechanicId\": 2\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Update repair (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/repairs/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "repairs",
+                "1"
+              ]
+            },
+            "description": "Full update of a repair.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estimatedRepairTime\": 10,\n  \"actualRepairTime\": 9,\n  \"vehicleId\": 1,\n  \"mechanicId\": 2\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Delete repair",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/repairs/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "repairs",
+                "1"
+              ]
+            },
+            "description": "Delete a repair by id."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Shipments",
+      "description": "Shipments represent cargo to be transported. Fields: customerId (FK), weight (int kg), value (numeric string), origin, destination.",
+      "item": [
+        {
+          "name": "List shipments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/shipments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "shipments"
+              ]
+            },
+            "description": "List all shipments."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Get shipment by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/shipments/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "shipments",
+                "1"
+              ]
+            },
+            "description": "Get a shipment by id."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Create shipment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/shipments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "shipments"
+              ]
+            },
+            "description": "Create a shipment. Update customerId to a valid row in your DB if a FK exists.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": 1,\n  \"weight\": 1200,\n  \"value\": \"5000.00\",\n  \"origin\": \"Toronto\",\n  \"destination\": \"Vancouver\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Update shipment (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/shipments/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "shipments",
+                "1"
+              ]
+            },
+            "description": "Full update of a shipment.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": 1,\n  \"weight\": 1500,\n  \"value\": \"6500.00\",\n  \"origin\": \"Toronto\",\n  \"destination\": \"Calgary\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Update shipment (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/shipments/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "shipments",
+                "1"
+              ]
+            },
+            "description": "Partial update of a shipment.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"destination\": \"Montreal\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Delete shipment",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/shipments/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "shipments",
+                "1"
+              ]
+            },
+            "description": "Delete a shipment by id."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Trips",
+      "description": "Trips represent routes. Fields: origin, destination. Additional endpoints manage many-to-many links to shipments.",
+      "item": [
+        {
+          "name": "List trips",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/trips",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "trips"
+              ]
+            },
+            "description": "List all trips."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Get trip by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/trips/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "trips",
+                "1"
+              ]
+            },
+            "description": "Get a trip by id."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Create trip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/trips",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "trips"
+              ]
+            },
+            "description": "Create a trip.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origin\": \"Toronto\",\n  \"destination\": \"Montreal\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Update trip (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/trips/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "trips",
+                "1"
+              ]
+            },
+            "description": "Full update of a trip.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"origin\": \"Ottawa\",\n  \"destination\": \"Quebec City\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Update trip (PATCH)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/trips/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "trips",
+                "1"
+              ]
+            },
+            "description": "Partial update of a trip.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"destination\": \"Halifax\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Delete trip",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/trips/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "trips",
+                "1"
+              ]
+            },
+            "description": "Delete a trip by id."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "List shipments on trip",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/trips/1/shipments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "trips",
+                "1",
+                "shipments"
+              ]
+            },
+            "description": "List shipments attached to a trip."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Add shipment to trip",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/trips/1/shipments",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "trips",
+                "1",
+                "shipments"
+              ]
+            },
+            "description": "Attach a shipment to a trip. Ensure shipment exists.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shipmentId\": 1\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Remove shipment from trip",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/trips/1/shipments/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "trips",
+                "1",
+                "shipments",
+                "1"
+              ]
+            },
+            "description": "Detach a shipment from a trip."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 200/201/204', function () { pm.expect([200,201,204]).to.include(pm.response.code); });",
+                  "pm.test('Response is JSON (when present)', function () { if (pm.response.text()) pm.response.to.have.header('Content-Type'); });"
+                ]
+              }
+            }
+          ],
+          "response": []
+        }
+      ]
+    }
+  ]
+}
