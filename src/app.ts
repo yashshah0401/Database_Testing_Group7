@@ -4,6 +4,7 @@ import "reflect-metadata";
 import vehicleRoutes from "./routes/vehicleRoutes";
 import employeeRoutes from "./routes/employeeRoutes";
 import repairRoutes from "./routes/repairRoutes";
+import shipmentRoutes from "./routes/shipmentRoutes"; // ✅ ADD
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/vehicles", vehicleRoutes);
 app.use("/employees", employeeRoutes);
 app.use("/repairs", repairRoutes);
+app.use("/shipments", shipmentRoutes); // ✅ ADD
 
 // Health check (optional)
 app.get("/", (_req, res) => {

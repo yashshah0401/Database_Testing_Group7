@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import { Vehicle } from "../entities/Vehicle";
 import { Employee } from "../entities/Employee";
 import { Repair } from "../entities/Repair";
+import { Shipment } from "../entities/Shipment";
 
 dotenv.config();
 
@@ -21,8 +22,8 @@ export const AppDataSource = new DataSource({
   username: DB_USERNAME,
   password: DB_PASSWORD,
   database: DB_NAME,
-  synchronize: false,        // keep false for prod/migrations
+  synchronize: false,
   logging: true,
-  entities: [Vehicle, Employee, Repair],
+  entities: [Vehicle, Employee, Repair, Shipment],
   migrations: ["src/migrations/*.ts"],
 });
