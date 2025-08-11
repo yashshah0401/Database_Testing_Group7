@@ -6,6 +6,8 @@ import { Vehicle } from "../entities/Vehicle";
 import { Employee } from "../entities/Employee";
 import { Repair } from "../entities/Repair";
 import { Shipment } from "../entities/Shipment";
+import { Trip } from "../entities/Trip";
+import { TripShipment } from "../entities/TripShipment";
 
 dotenv.config();
 
@@ -24,6 +26,6 @@ export const AppDataSource = new DataSource({
   database: DB_NAME,
   synchronize: false,
   logging: true,
-  entities: [Vehicle, Employee, Repair, Shipment],
+  entities: [Vehicle, Employee, Repair, Shipment, Trip, TripShipment],
   migrations: ["src/migrations/*.ts"],
 });
