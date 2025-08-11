@@ -5,7 +5,6 @@ export class Repair {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  // Explicit int types (DB shows INTEGER)
   @Column("int")
   estimatedRepairTime!: number;
 

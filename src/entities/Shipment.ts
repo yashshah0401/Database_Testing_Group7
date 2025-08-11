@@ -11,7 +11,6 @@ export class Shipment {
   @Column({ name: "weight", type: "int" })
   weight!: number;
 
-  // numeric(10,2) in Postgres — keep as string to avoid float precision issues
   @Column({ name: "value", type: "numeric", precision: 10, scale: 2 })
   value!: string;
 

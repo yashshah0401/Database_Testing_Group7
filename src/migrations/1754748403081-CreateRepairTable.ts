@@ -30,7 +30,6 @@ export class CreateRepairTable1754719999999 implements MigrationInterface {
       ON DELETE CASCADE ON UPDATE NO ACTION
     `);
 
-    // Optional indexes (helps joins/filters)
     await queryRunner.query(`CREATE INDEX "IDX_repair_vehicleId" ON "repair" ("vehicleId")`);
     await queryRunner.query(`CREATE INDEX "IDX_repair_mechanicId" ON "repair" ("mechanicId")`);
   }

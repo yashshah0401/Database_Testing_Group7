@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
   res.json(vehicles);
 });
 
-// GET a single vehicle by ID ✅ [NEWLY ADDED]
+// GET a single vehicle by ID 
 router.get("/:id", async (req, res) => {
   const id = parseInt(req.params.id);
   const vehicle = await vehicleRepo.findOneBy({ id });
